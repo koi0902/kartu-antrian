@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kartu Antrian</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    min-height: 100vh;
+    background: #ECE5DD;
+    font-family: 'Segoe UI', sans-serif;
+    padding: 20px;
+  }
+
+  h2 {
+    color: #075E54;
+    font-size: 18px;
+    margin-bottom: 4px;
+  }
+  .sub { color: #888; font-size: 13px; margin-bottom: 20px; }
+
+  /* FORM */
+  .form-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 480px;
+    margin: 0 auto 24px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  }
+  label { font-size: 13px; font-weight: 600; color: #444; display: block; margin-bottom: 6px; }
+  input, select {
+    width: 100%; padding: 11px 14px;
+    border: 1.5px solid #ddd; border-radius: 10px;
+    font-size: 14px; margin-bottom: 14px; outline: none;
+    transition: border 0.2s;
+  }
+  input:focus, select:focus { border-color: #25D366; }
+  .row { display: flex; gap: 12px; }
+  .row > div { flex: 1; }
+
+  .btn {
+    width: 100%; padding: 13px;
+    background: #25D366; color: #fff;
+    border: none; border-radius: 12px;
+    font-size: 15px; font-weight: 700;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .btn:hover { background: #128C7E; }
+
+  /* TABLE */
+  .table-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 20px;
+    max-width: 480px;
+    margin: 0 auto;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  }
+  .table-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 14px;
+  }
+  .table-title { font-size: 15px; font-weight: 700; color: #075E54; }
+  .badge {
+    background: #25D366; color: #fff;
+    border-radius: 20px; padding: 3px 12px;
+    font-size: 12px; font-weight: 700;
+  }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: #075E54; }
+  thead th {
+    color: #fff; font-size: 13px; font-weight: 600;
+    padding: 10px 12px; text-align: left;
+  }
+  thead th:first-child { border-radius: 8px 0 0 8px; }
+  thead th:last-child { border-radius: 0 8px 8px 0; text-align: center; }
+
+  tbody tr { border-bottom: 1px solid #f0f0f0; transition: background 0.15s; }
+  tbody tr:hover { background: #f9fffe; }
+  tbody tr.done { opacity: 0.45; text-decoration: line-through; }
+
+  td { padding: 10px 12px; font-size: 14px; color: #333; vertical-align: middle; }
+  td.nomor {
+    font-weight: 700; font-size: 16px; color: #075E54;
+    font-family: 'Courier New', monospace;
+  }
+  td.aksi { text-align: center; }
+
+  .btn-wa {
+    background: #25D366; color: #fff;
+    border: none; border-radius: 8px;
+    padding: 7px 14px; font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: background 0.2s;
+    text-decoration: none; display: inline-block;
+  }
+  .btn-wa:hover { background: #128C7E; }
+  .btn-wa.sent { background: #aaa; cursor: default; }
+
+  .empty {
+    text-align: center; padding: 32px 0;
+    color: #bbb; font-size: 14px;
+  }
+
+  .btn-clear {
+    background: none; border: 1px solid #ddd;
+    border-radius: 8px; padding: 5px 12px;
+    font-size: 12px; color: #aaa; cursor: pointer;
+  }
+  .btn-clear:hover { color: #e74c3c; border-color: #e74c3c; }
+</style>
+</head>
+<body>
+
+<!-- FORM -->
+<div class="form-card">
+  <h2>🎫 Kartu Antrian</h2>
+  <p class="sub">Isi data antrian lalu kirim balasan via WhatsApp</p>
+
+  <div class="row">
+    <div>
+      <label>Nama</label>
+      <input type="text" id="inputNama" placeholder="Nama pelanggan">
+    </div>
+    <div>
+      <label>Layanan</label>
+      <select id="inputLayanan">
+        <option value="A|Umum">🏢 Umum</option>
+        <option value="B|Prioritas">⭐ Prioritas</option>
+        <option value="C|Khusus">💎 Khusus</option>
+      </select>
+    </div>
+  </div>
+
+  <label>No. WhatsApp</label>
+  <input type="tel" id="inputHP" placeholder="08xxxxxxxxxx">
+
+  <button class="btn" onclick="tambahAntrian()">+ Tambah Antrian</button>
+</div>
+
+<!-- TABLE -->
+<div class="table-card">
+  <div class="table-header">
+    <span class="table-title">📋 Daftar Antrian</span>
+    <div style="display:flex;gap:8px;align-items:center">
+      <span class="badge" id="totalBadge">0</span>
+      <button class="btn-clear" onclick="clearSemua()">Hapus Semua</button>
+    </div>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>No.</th>
+        <th>Nama</th>
+        <th>Layanan</th>
+        <th>Kirim</th>
+      </tr>
+    </thead>
+    <tbody id="tabelBody">
+      <tr><td colspan="4" class="empty">Belum ada antrian</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  const counters = { A: 0, B: 0, C: 0 };
+  const daftar = [];
+
+  function tambahAntrian() {
+    const nama = document.getElementById('inputNama').value.trim();
+    const hp   = document.getElementById('inputHP').value.trim();
+    const [prefix, layanan] = document.getElementById('inputLayanan').value.split('|');
+
+    if (!nama) { alert('Nama wajib diisi!'); return; }
+    if (!hp)   { alert('Nomor WhatsApp wajib diisi!'); return; }
+
+    counters[prefix]++;
+    const nomor = prefix + String(counters[prefix]).padStart(3, '0');
+
+    const now = new Date();
+    const tgl = now.toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
+    const jam = now.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+
+    const pesan =
+      `Halo *${nama}* 👋\n\n` +
+      `🎫 *NOMOR ANTRIAN ANDA*\n` +
+      `━━━━━━━━━━━━━━━━\n` +
+      `📋 Layanan: *${layanan}*\n` +
+      `🔢 Nomor: *${nomor}*\n` +
+      `📅 ${tgl}  ⏰ ${jam}\n` +
+      `━━━━━━━━━━━━━━━━\n` +
+      `Mohon tunggu, kami akan memanggil nomor antrian Anda.\n\n` +
+      `_Terima kasih 🙏_`;
+
+    let hpFormat = hp.replace(/\D/g, '');
+    if (hpFormat.startsWith('0')) hpFormat = '62' + hpFormat.slice(1);
+    const waLink = `https://wa.me/${hpFormat}?text=${encodeURIComponent(pesan)}`;
+
+    daftar.push({ nama, layanan, nomor, waLink, terkirim: false });
+    renderTabel();
+
+    // reset form
+    document.getElementById('inputNama').value = '';
+    document.getElementById('inputHP').value = '';
+  }
+
+  function kirim(index) {
+    window.open(daftar[index].waLink, '_blank');
+    daftar[index].terkirim = true;
+    renderTabel();
+  }
+
+  function clearSemua() {
+    if (!daftar.length) return;
+    if (confirm('Hapus semua antrian?')) {
+      daftar.length = 0;
+      counters.A = counters.B = counters.C = 0;
+      renderTabel();
+    }
+  }
+
+  function renderTabel() {
+    const tbody = document.getElementById('tabelBody');
+    document.getElementById('totalBadge').textContent = daftar.length;
+
+    if (!daftar.length) {
+      tbody.innerHTML = `<tr><td colspan="4" class="empty">Belum ada antrian</td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = daftar.map((d, i) => `
+      <tr class="${d.terkirim ? 'done' : ''}">
+        <td class="nomor">${d.nomor}</td>
+        <td>${d.nama}</td>
+        <td>${d.layanan}</td>
+        <td class="aksi">
+          ${d.terkirim
+            ? `<span class="btn-wa sent">✓ Terkirim</span>`
+            : `<button class="btn-wa" onclick="kirim(${i})">📲 Kirim</button>`
+          }
+        </td>
+      </tr>
+    `).join('');
+  }
+</script>
+</body>
+</html>
+
