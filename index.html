@@ -1,254 +1,411 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>antrian untuk chat choirul</title>
-<style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { min-height: 100vh; background: #ECE5DD; font-family: 'Segoe UI', sans-serif; padding: 16px; }
-  h2 { color: #075E54; font-size: 17px; margin-bottom: 4px; }
-  .sub { color: #888; font-size: 12px; margin-bottom: 16px; }
-  .card { background: #fff; border-radius: 14px; padding: 20px; max-width: 520px; margin: 0 auto 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.09); }
-  label { font-size: 12px; font-weight: 600; color: #444; display: block; margin-bottom: 5px; }
-  input, select { width: 100%; padding: 10px 12px; border: 1.5px solid #ddd; border-radius: 9px; font-size: 14px; margin-bottom: 12px; outline: none; transition: border 0.2s; }
-  input:focus, select:focus { border-color: #25D366; }
-  .row { display: flex; gap: 10px; }
-  .row > div { flex: 1; }
-  .btn { width: 100%; padding: 12px; background: #25D366; color: #fff; border: none; border-radius: 11px; font-size: 14px; font-weight: 700; cursor: pointer; transition: background 0.2s; margin-bottom: 8px; }
-  .btn:hover { background: #128C7E; }
-  .btn:disabled { background: #aaa; cursor: default; }
-  .btn-seed { width: 100%; padding: 10px; background: #fff; color: #075E54; border: 2px solid #075E54; border-radius: 11px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-  .btn-seed:hover { background: #075E54; color: #fff; }
-  .btn-seed:disabled { border-color: #aaa; color: #aaa; cursor: default; }
-  .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; flex-wrap: wrap; gap: 8px; }
-  .table-title { font-size: 14px; font-weight: 700; color: #075E54; }
-  .badge { background: #25D366; color: #fff; border-radius: 20px; padding: 3px 11px; font-size: 12px; font-weight: 700; }
-  .search-box { width: 100%; padding: 9px 12px; border: 1.5px solid #ddd; border-radius: 9px; font-size: 13px; margin-bottom: 12px; outline: none; }
-  .search-box:focus { border-color: #25D366; }
-  .table-wrap { overflow-x: auto; }
-  table { width: 100%; border-collapse: collapse; min-width: 380px; }
-  thead tr { background: #075E54; }
-  thead th { color: #fff; font-size: 12px; font-weight: 600; padding: 9px 10px; text-align: left; white-space: nowrap; }
-  thead th:first-child { border-radius: 8px 0 0 8px; }
-  thead th:last-child { border-radius: 0 8px 8px 0; text-align: center; }
-  tbody tr { border-bottom: 1px solid #f0f0f0; transition: background 0.15s; }
-  tbody tr:hover { background: #f9fffe; }
-  tbody tr.done td { opacity: 0.4; text-decoration: line-through; }
-  td { padding: 9px 10px; font-size: 13px; color: #333; vertical-align: middle; }
-  td.nomor { font-weight: 700; font-size: 14px; color: #075E54; font-family: 'Courier New', monospace; }
-  td.aksi { text-align: center; }
-  .btn-wa { background: #25D366; color: #fff; border: none; border-radius: 7px; padding: 6px 12px; font-size: 12px; font-weight: 600; cursor: pointer; transition: background 0.2s; white-space: nowrap; }
-  .btn-wa:hover { background: #128C7E; }
-  .btn-sent { background: #aaa; color: #fff; border-radius: 7px; padding: 6px 12px; font-size: 12px; }
-  .empty { text-align: center; padding: 28px 0; color: #bbb; font-size: 13px; }
-  .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #075E54; color: #fff; padding: 10px 24px; border-radius: 20px; font-size: 13px; font-weight: 600; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 999; white-space: nowrap; }
-  .toast.show { opacity: 1; }
-  .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
-  .page-btn { padding: 5px 12px; border-radius: 8px; border: 1.5px solid #ddd; background: #fff; font-size: 13px; cursor: pointer; transition: all 0.15s; }
-  .page-btn:hover { border-color: #25D366; color: #075E54; }
-  .page-btn.active { background: #075E54; color: #fff; border-color: #075E54; }
-  .page-info { font-size: 12px; color: #888; }
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Antrian Untuk Chat Choirul</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial, sans-serif;
+    }
+
+    body{
+      background:#ddd7d1;
+      padding:20px;
+    }
+
+    .card{
+      background:white;
+      border-radius:25px;
+      padding:25px;
+      margin-bottom:30px;
+      box-shadow:0 5px 15px rgba(0,0,0,0.08);
+    }
+
+    .title{
+      font-size:20px;
+      font-weight:bold;
+      color:#0c6157;
+      margin-bottom:8px;
+    }
+
+    .subtitle{
+      color:#777;
+      margin-bottom:25px;
+    }
+
+    .row{
+      display:flex;
+      gap:15px;
+      margin-bottom:20px;
+    }
+
+    .group{
+      flex:1;
+    }
+
+    label{
+      display:block;
+      margin-bottom:8px;
+      font-weight:bold;
+      color:#444;
+    }
+
+    input, select{
+      width:100%;
+      padding:16px;
+      border-radius:16px;
+      border:3px solid #e5e5e5;
+      font-size:16px;
+      outline:none;
+    }
+
+    button{
+      width:100%;
+      border:none;
+      padding:18px;
+      border-radius:20px;
+      font-size:22px;
+      font-weight:bold;
+      cursor:pointer;
+    }
+
+    .btn-add{
+      background:#2fd15f;
+      color:white;
+      margin-top:10px;
+    }
+
+    .search{
+      margin:20px 0;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      overflow:hidden;
+      border-radius:10px;
+    }
+
+    thead{
+      background:#0b665c;
+      color:white;
+    }
+
+    th, td{
+      padding:15px;
+      text-align:left;
+    }
+
+    tbody{
+      background:#f7f7f7;
+    }
+
+    .badge{
+      background:#2fd15f;
+      color:white;
+      padding:8px 16px;
+      border-radius:20px;
+      float:right;
+      font-weight:bold;
+    }
+
+    .loading{
+      text-align:center;
+      padding:30px;
+      color:#777;
+    }
+
+    .wa-btn{
+      background:#25D366;
+      color:white;
+      padding:10px 15px;
+      border-radius:10px;
+      text-decoration:none;
+      font-size:14px;
+      font-weight:bold;
+      display:inline-block;
+    }
+
+  </style>
 </head>
+
 <body>
 
+<!-- FORM -->
 <div class="card">
-  <h2>🎫 antrian untuk chat choirul</h2>
-  <p class="sub">Tambah antrian lalu kirim balasan via WhatsApp</p>
+
+  <div class="title">
+    📋 Antrian Untuk Chat Choirul
+  </div>
+
+  <div class="subtitle">
+    Tambah antrian lalu kirim balasan via WhatsApp
+  </div>
+
   <div class="row">
-    <div>
+
+    <div class="group">
       <label>Nama</label>
-      <input type="text" id="inputNama" placeholder="Nama pelanggan">
+
+      <input
+        type="text"
+        id="nama"
+        placeholder="Nama pelanggan"
+      >
     </div>
-    <div>
+
+    <div class="group">
       <label>Layanan</label>
-      <select id="inputLayanan">
-        <option value="Umum">🏢 Umum</option>
-        <option value="Prioritas">⭐ Prioritas</option>
-        <option value="Khusus">💎 Khusus</option>
+
+      <select id="layanan">
+        <option>💬 Chat Umum</option>
+        <option>🔥 Prioritas</option>
+        <option>📞 Konsultasi</option>
       </select>
     </div>
+
   </div>
-  <label>No. WhatsApp</label>
-  <input type="tel" id="inputHP" placeholder="08xxxxxxxxxx">
-  <button class="btn" id="btnTambah" onclick="tambahAntrian()">+ Tambah Antrian</button>
-  <button class="btn-seed" id="btnSeed" onclick="seedData()">🌱 Isi 500 Data Dummy ke Google Sheets</button>
+
+  <div class="group">
+    <label>No. WhatsApp</label>
+
+    <input
+      type="text"
+      id="nohp"
+      placeholder="08xxxxxxxxxx"
+    >
+  </div>
+
+  <button class="btn-add" onclick="tambahAntrian()">
+    + Tambah Antrian
+  </button>
+
 </div>
 
+
+<!-- LIST -->
 <div class="card">
-  <div class="table-header">
-    <span class="table-title">📋 Daftar Antrian</span>
-    <span class="badge" id="totalBadge">0</span>
+
+  <div class="title">
+    📋 Daftar Antrian
+    <span class="badge" id="jumlahData">0</span>
   </div>
-  <input class="search-box" type="text" id="searchBox" placeholder="🔍 Cari nama atau nomor antrian..." oninput="renderTabel()">
-  <div class="table-wrap">
-    <table>
-      <thead>
-        <tr><th>No.</th><th>Nama</th><th>Layanan</th><th>Kirim</th></tr>
-      </thead>
-      <tbody id="tabelBody">
-        <tr><td colspan="4" class="empty">Memuat data...</td></tr>
-      </tbody>
-    </table>
+
+  <div class="search">
+
+    <input
+      type="text"
+      placeholder="🔎 Cari nama..."
+      onkeyup="cariData(this.value)"
+    >
+
   </div>
-  <div class="pagination" id="pagination"></div>
+
+  <table>
+
+    <thead>
+      <tr>
+        <th>Nama</th>
+        <th>Layanan</th>
+        <th>Kirim</th>
+      </tr>
+    </thead>
+
+    <tbody id="tbody">
+
+      <tr>
+        <td colspan="3" class="loading">
+          Memuat data...
+        </td>
+      </tr>
+
+    </tbody>
+
+  </table>
+
 </div>
 
-<div class="toast" id="toast"></div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwxu2z1nGR9ITs2CfgcJBcjEF8UlnJAAr81878P3cnbrqHA61EJ-w5dDg4emB-muEOF/exec";
-const PREFIX = { Umum: "A", Prioritas: "B", Khusus: "C" };
-let semuaData = [], counters = { A:0, B:0, C:0 }, page = 1;
-const perPage = 20;
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
+const URL = "https://script.google.com/macros/s/AKfycbw-W0k_P84snIaEQTBGKMPgvhTKQa_EYcgtILJWMWyVocEkoOoHpv2uVgf4W8cWkA/exec";
+
+let semuaData = [];
+
+
+
+// LOAD DATA
+async function loadData(){
+
+  try{
+
+    const response = await fetch(URL);
+
+    const data = await response.json();
+
+    semuaData = data;
+
+    tampilkanData(data);
+
+  }catch(error){
+
+    document.getElementById("tbody").innerHTML = `
+      <tr>
+        <td colspan="3" class="loading">
+          Gagal memuat data 😢
+        </td>
+      </tr>
+    `;
+
+  }
+
 }
 
-function formatHP(hp) {
-  let h = hp.replace(/\D/g,'');
-  if (h.startsWith('0')) h = '62' + h.slice(1);
-  return h;
-}
 
-function buatPesan(nama, nomor, layanan) {
-  const now = new Date();
-  const tgl = now.toLocaleDateString('id-ID', {day:'numeric',month:'long',year:'numeric'});
-  const jam = now.toLocaleTimeString('id-ID', {hour:'2-digit',minute:'2-digit'});
-  return `Halo *${nama}* 👋\n\n🎫 *NOMOR ANTRIAN ANDA*\n━━━━━━━━━━━━━━━━\n📋 Layanan: *${layanan}*\n🔢 Nomor: *${nomor}*\n📅 ${tgl}  ⏰ ${jam}\n━━━━━━━━━━━━━━━━\nMohon tunggu, kami akan memanggil nomor antrian Anda.\n\n_Terima kasih 🙏_`;
-}
 
-// JSONP — solusi CORS untuk Google Apps Script
-function jsonp(url) {
-  return new Promise((resolve, reject) => {
-    const cbName = 'cb_' + Date.now() + '_' + Math.random().toString(36).slice(2);
-    const script = document.createElement('script');
-    let done = false;
-    window[cbName] = (data) => {
-      done = true; resolve(data);
-      delete window[cbName];
-      if (script.parentNode) script.parentNode.removeChild(script);
-    };
-    script.onerror = () => {
-      if (!done) { reject(new Error('JSONP error')); delete window[cbName]; }
-      if (script.parentNode) script.parentNode.removeChild(script);
-    };
-    const sep = url.includes('?') ? '&' : '?';
-    script.src = url + sep + 'callback=' + cbName;
-    document.head.appendChild(script);
+// TAMPILKAN DATA
+function tampilkanData(data){
+
+  const tbody = document.getElementById("tbody");
+
+  document.getElementById("jumlahData").innerText = data.length;
+
+  if(data.length === 0){
+
+    tbody.innerHTML = `
+      <tr>
+        <td colspan="3" class="loading">
+          Belum ada antrian
+        </td>
+      </tr>
+    `;
+
+    return;
+  }
+
+  tbody.innerHTML = "";
+
+  data.reverse().forEach((item)=>{
+
+    const nama = item.nama || "";
+    const layanan = item.layanan || "";
+    const nohp = item.nohp || "";
+
+    const pesan = encodeURIComponent(
+`Halo ${nama}
+
+Antrian kamu untuk "${layanan}" sudah masuk 👍`
+    );
+
+    const wa = `https://wa.me/${nohp}?text=${pesan}`;
+
+    tbody.innerHTML += `
+      <tr>
+
+        <td>${nama}</td>
+
+        <td>${layanan}</td>
+
+        <td>
+          <a
+            href="${wa}"
+            target="_blank"
+            class="wa-btn"
+          >
+            WhatsApp
+          </a>
+        </td>
+
+      </tr>
+    `;
+
   });
+
 }
 
-async function loadData() {
-  try {
-    const raw = await jsonp(SCRIPT_URL + "?action=getAll");
-    semuaData = (Array.isArray(raw) ? raw.slice(1) : []).map(r => ({
-      nomor: r[0], nama: r[1], layanan: r[2], hp: r[3], status: r[4]
-    }));
-    semuaData.forEach(d => {
-      if (!d.nomor) return;
-      const p = d.nomor[0], n = parseInt(d.nomor.slice(1)) || 0;
-      if (counters[p] !== undefined && n > counters[p]) counters[p] = n;
+
+
+// TAMBAH DATA
+async function tambahAntrian(){
+
+  const nama = document.getElementById("nama").value;
+
+  const layanan = document.getElementById("layanan").value;
+
+  const nohp = document.getElementById("nohp").value;
+
+
+  if(!nama || !nohp){
+
+    alert("Isi semua data");
+    return;
+  }
+
+
+  const formData = new FormData();
+
+  formData.append("nama", nama);
+
+  formData.append("layanan", layanan);
+
+  formData.append("nohp", nohp);
+
+
+  try{
+
+    await fetch(URL, {
+
+      method:"POST",
+
+      body:formData
+
     });
-    document.getElementById('totalBadge').textContent = semuaData.length;
-    renderTabel();
-  } catch(e) {
-    document.getElementById('tabelBody').innerHTML = `<tr><td colspan="4" class="empty">Gagal memuat data 😢<br><small>Pastikan Apps Script sudah di-deploy ulang</small></td></tr>`;
+
+    alert("Antrian berhasil ditambahkan");
+
+    document.getElementById("nama").value = "";
+
+    document.getElementById("nohp").value = "";
+
+    loadData();
+
+  }catch(error){
+
+    alert("Gagal mengirim data");
+
   }
+
 }
 
-function renderTabel() {
-  const q = document.getElementById('searchBox').value.toLowerCase();
-  const filtered = semuaData.filter(d =>
-    (d.nama||'').toLowerCase().includes(q) || (d.nomor||'').toLowerCase().includes(q)
-  );
-  const totalPage = Math.max(1, Math.ceil(filtered.length / perPage));
-  if (page > totalPage) page = totalPage;
-  const slice = filtered.slice((page-1)*perPage, page*perPage);
-  const tbody = document.getElementById('tabelBody');
-  if (!slice.length) {
-    tbody.innerHTML = `<tr><td colspan="4" class="empty">Tidak ada data</td></tr>`;
-  } else {
-    tbody.innerHTML = slice.map(d => {
-      const idx = semuaData.indexOf(d);
-      const sent = d.status === 'Terkirim';
-      return `<tr class="${sent?'done':''}">
-        <td class="nomor">${d.nomor||'-'}</td>
-        <td>${d.nama||'-'}</td>
-        <td>${d.layanan||'-'}</td>
-        <td class="aksi">${sent
-          ? `<span class="btn-sent">✓ Terkirim</span>`
-          : `<button class="btn-wa" onclick="kirim(${idx})">📲 Kirim</button>`
-        }</td>
-      </tr>`;
-    }).join('');
-  }
-  const pg = document.getElementById('pagination');
-  if (totalPage <= 1) { pg.innerHTML=''; return; }
-  let html = `<span class="page-info">Hal ${page}/${totalPage}</span>`;
-  if (page > 1) html += `<button class="page-btn" onclick="goPage(${page-1})">‹ Prev</button>`;
-  let s = Math.max(1,page-2), e = Math.min(totalPage,s+4);
-  for (let p2=s; p2<=e; p2++) html += `<button class="page-btn ${p2===page?'active':''}" onclick="goPage(${p2})">${p2}</button>`;
-  if (page < totalPage) html += `<button class="page-btn" onclick="goPage(${page+1})">Next ›</button>`;
-  pg.innerHTML = html;
+
+
+// SEARCH
+function cariData(keyword){
+
+  keyword = keyword.toLowerCase();
+
+  const hasil = semuaData.filter(item => {
+
+    return item.nama.toLowerCase().includes(keyword);
+
+  });
+
+  tampilkanData(hasil);
+
 }
 
-function goPage(p) { page=p; renderTabel(); }
 
-async function kirim(idx) {
-  const d = semuaData[idx];
-  if (!d.hp) { alert('Nomor HP tidak ada!'); return; }
-  const url = `https://wa.me/${formatHP(d.hp)}?text=${encodeURIComponent(buatPesan(d.nama,d.nomor,d.layanan))}`;
-  window.open(url, '_blank');
-  d.status = 'Terkirim'; renderTabel(); showToast('✅ WhatsApp dibuka!');
-  jsonp(`${SCRIPT_URL}?action=updateStatus&nomor=${encodeURIComponent(d.nomor)}`).catch(()=>{});
-}
-
-async function tambahAntrian() {
-  const nama = document.getElementById('inputNama').value.trim();
-  const hp   = document.getElementById('inputHP').value.trim();
-  const layanan = document.getElementById('inputLayanan').value;
-  if (!nama) { alert('Nama wajib diisi!'); return; }
-  if (!hp)   { alert('Nomor WhatsApp wajib diisi!'); return; }
-  const prefix = PREFIX[layanan];
-  counters[prefix]++;
-  const nomor = prefix + String(counters[prefix]).padStart(3,'0');
-  const btn = document.getElementById('btnTambah');
-  btn.disabled=true; btn.textContent='Menyimpan...';
-  try {
-    await jsonp(`${SCRIPT_URL}?action=tambah&nomor=${encodeURIComponent(nomor)}&nama=${encodeURIComponent(nama)}&layanan=${encodeURIComponent(layanan)}&hp=${encodeURIComponent(hp)}`);
-    semuaData.unshift({nomor,nama,layanan,hp,status:'Belum'});
-    document.getElementById('totalBadge').textContent = semuaData.length;
-    page=1; renderTabel();
-    showToast(`✅ ${nomor} - ${nama} ditambahkan!`);
-    document.getElementById('inputNama').value='';
-    document.getElementById('inputHP').value='';
-  } catch(e) {
-    alert('Gagal menyimpan. Coba lagi.');
-    counters[prefix]--;
-  }
-  btn.disabled=false; btn.textContent='+ Tambah Antrian';
-}
-
-async function seedData() {
-  if (!confirm('Isi 500 data dummy ke Google Sheets? Data lama akan tertimpa!')) return;
-  const btn = document.getElementById('btnSeed');
-  btn.disabled=true; btn.textContent='⏳ Mengisi data...';
-  try {
-    const data = await jsonp(SCRIPT_URL + "?action=seeding");
-    showToast(`✅ ${data.total} data berhasil diisi!`);
-    await loadData();
-  } catch(e) {
-    alert('Gagal seeding. Coba lagi.');
-  }
-  btn.disabled=false; btn.textContent='🌱 Isi 500 Data Dummy ke Google Sheets';
-}
 
 loadData();
+
 </script>
+
 </body>
 </html>
