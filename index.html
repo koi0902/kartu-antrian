@@ -3,122 +3,144 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Kartu Antrian</title>
+<title>Sistem Antrian</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-
   body {
     min-height: 100vh;
     background: #ECE5DD;
     font-family: 'Segoe UI', sans-serif;
-    padding: 20px;
+    padding: 16px;
   }
 
-  h2 {
-    color: #075E54;
-    font-size: 18px;
-    margin-bottom: 4px;
-  }
-  .sub { color: #888; font-size: 13px; margin-bottom: 20px; }
+  h2 { color: #075E54; font-size: 17px; margin-bottom: 4px; }
+  .sub { color: #888; font-size: 12px; margin-bottom: 16px; }
 
-  /* FORM */
-  .form-card {
+  .card {
     background: #fff;
-    border-radius: 16px;
-    padding: 24px;
-    max-width: 480px;
-    margin: 0 auto 24px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+    border-radius: 14px;
+    padding: 20px;
+    max-width: 520px;
+    margin: 0 auto 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.09);
   }
-  label { font-size: 13px; font-weight: 600; color: #444; display: block; margin-bottom: 6px; }
+
+  label { font-size: 12px; font-weight: 600; color: #444; display: block; margin-bottom: 5px; }
   input, select {
-    width: 100%; padding: 11px 14px;
-    border: 1.5px solid #ddd; border-radius: 10px;
-    font-size: 14px; margin-bottom: 14px; outline: none;
+    width: 100%; padding: 10px 12px;
+    border: 1.5px solid #ddd; border-radius: 9px;
+    font-size: 14px; margin-bottom: 12px; outline: none;
     transition: border 0.2s;
   }
   input:focus, select:focus { border-color: #25D366; }
-  .row { display: flex; gap: 12px; }
+  .row { display: flex; gap: 10px; }
   .row > div { flex: 1; }
 
   .btn {
-    width: 100%; padding: 13px;
+    width: 100%; padding: 12px;
     background: #25D366; color: #fff;
-    border: none; border-radius: 12px;
-    font-size: 15px; font-weight: 700;
+    border: none; border-radius: 11px;
+    font-size: 14px; font-weight: 700;
     cursor: pointer; transition: background 0.2s;
+    margin-bottom: 8px;
   }
   .btn:hover { background: #128C7E; }
+  .btn:disabled { background: #aaa; cursor: default; }
 
-  /* TABLE */
-  .table-card {
-    background: #fff;
-    border-radius: 16px;
-    padding: 20px;
-    max-width: 480px;
-    margin: 0 auto;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+  .btn-seed {
+    width: 100%; padding: 10px;
+    background: #fff; color: #075E54;
+    border: 2px solid #075E54; border-radius: 11px;
+    font-size: 13px; font-weight: 600;
+    cursor: pointer; transition: all 0.2s;
   }
+  .btn-seed:hover { background: #075E54; color: #fff; }
+  .btn-seed:disabled { border-color: #aaa; color: #aaa; cursor: default; }
+
+  /* Table */
   .table-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 14px;
+    display: flex; justify-content: space-between;
+    align-items: center; margin-bottom: 12px;
+    flex-wrap: wrap; gap: 8px;
   }
-  .table-title { font-size: 15px; font-weight: 700; color: #075E54; }
+  .table-title { font-size: 14px; font-weight: 700; color: #075E54; }
   .badge {
     background: #25D366; color: #fff;
-    border-radius: 20px; padding: 3px 12px;
+    border-radius: 20px; padding: 3px 11px;
     font-size: 12px; font-weight: 700;
   }
 
-  table { width: 100%; border-collapse: collapse; }
+  .search-box {
+    width: 100%; padding: 9px 12px;
+    border: 1.5px solid #ddd; border-radius: 9px;
+    font-size: 13px; margin-bottom: 12px; outline: none;
+  }
+  .search-box:focus { border-color: #25D366; }
+
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; min-width: 380px; }
   thead tr { background: #075E54; }
   thead th {
-    color: #fff; font-size: 13px; font-weight: 600;
-    padding: 10px 12px; text-align: left;
+    color: #fff; font-size: 12px; font-weight: 600;
+    padding: 9px 10px; text-align: left; white-space: nowrap;
   }
   thead th:first-child { border-radius: 8px 0 0 8px; }
   thead th:last-child { border-radius: 0 8px 8px 0; text-align: center; }
 
   tbody tr { border-bottom: 1px solid #f0f0f0; transition: background 0.15s; }
   tbody tr:hover { background: #f9fffe; }
-  tbody tr.done { opacity: 0.45; text-decoration: line-through; }
+  tbody tr.done td { opacity: 0.4; text-decoration: line-through; }
 
-  td { padding: 10px 12px; font-size: 14px; color: #333; vertical-align: middle; }
+  td { padding: 9px 10px; font-size: 13px; color: #333; vertical-align: middle; }
   td.nomor {
-    font-weight: 700; font-size: 16px; color: #075E54;
+    font-weight: 700; font-size: 14px; color: #075E54;
     font-family: 'Courier New', monospace;
   }
   td.aksi { text-align: center; }
 
   .btn-wa {
     background: #25D366; color: #fff;
-    border: none; border-radius: 8px;
-    padding: 7px 14px; font-size: 13px; font-weight: 600;
+    border: none; border-radius: 7px;
+    padding: 6px 12px; font-size: 12px; font-weight: 600;
     cursor: pointer; transition: background 0.2s;
-    text-decoration: none; display: inline-block;
+    white-space: nowrap;
   }
   .btn-wa:hover { background: #128C7E; }
-  .btn-wa.sent { background: #aaa; cursor: default; }
+  .btn-sent { background: #aaa; color: #fff; border-radius: 7px; padding: 6px 12px; font-size: 12px; }
 
-  .empty {
-    text-align: center; padding: 32px 0;
-    color: #bbb; font-size: 14px;
-  }
+  .empty { text-align: center; padding: 28px 0; color: #bbb; font-size: 13px; }
 
-  .btn-clear {
-    background: none; border: 1px solid #ddd;
-    border-radius: 8px; padding: 5px 12px;
-    font-size: 12px; color: #aaa; cursor: pointer;
+  .toast {
+    position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+    background: #075E54; color: #fff;
+    padding: 10px 24px; border-radius: 20px;
+    font-size: 13px; font-weight: 600;
+    opacity: 0; transition: opacity 0.3s;
+    pointer-events: none; z-index: 999;
+    white-space: nowrap;
   }
-  .btn-clear:hover { color: #e74c3c; border-color: #e74c3c; }
+  .toast.show { opacity: 1; }
+
+  .pagination {
+    display: flex; justify-content: center;
+    align-items: center; gap: 8px;
+    margin-top: 14px; flex-wrap: wrap;
+  }
+  .page-btn {
+    padding: 5px 12px; border-radius: 8px;
+    border: 1.5px solid #ddd; background: #fff;
+    font-size: 13px; cursor: pointer; transition: all 0.15s;
+  }
+  .page-btn:hover { border-color: #25D366; color: #075E54; }
+  .page-btn.active { background: #075E54; color: #fff; border-color: #075E54; }
+  .page-info { font-size: 12px; color: #888; }
 </style>
 </head>
 <body>
 
-<!-- FORM -->
-<div class="form-card">
-  <h2>🎫 Kartu Antrian</h2>
-  <p class="sub">Isi data antrian lalu kirim balasan via WhatsApp</p>
+<div class="card">
+  <h2>🎫 Sistem Antrian</h2>
+  <p class="sub">Tambah antrian lalu kirim balasan via WhatsApp</p>
 
   <div class="row">
     <div>
@@ -128,9 +150,9 @@
     <div>
       <label>Layanan</label>
       <select id="inputLayanan">
-        <option value="A|Umum">🏢 Umum</option>
-        <option value="B|Prioritas">⭐ Prioritas</option>
-        <option value="C|Khusus">💎 Khusus</option>
+        <option value="Umum">🏢 Umum</option>
+        <option value="Prioritas">⭐ Prioritas</option>
+        <option value="Khusus">💎 Khusus</option>
       </select>
     </div>
   </div>
@@ -138,115 +160,203 @@
   <label>No. WhatsApp</label>
   <input type="tel" id="inputHP" placeholder="08xxxxxxxxxx">
 
-  <button class="btn" onclick="tambahAntrian()">+ Tambah Antrian</button>
+  <button class="btn" id="btnTambah" onclick="tambahAntrian()">+ Tambah Antrian</button>
+  <button class="btn-seed" id="btnSeed" onclick="seedData()">🌱 Isi 500 Data Dummy ke Google Sheets</button>
 </div>
 
-<!-- TABLE -->
-<div class="table-card">
+<div class="card">
   <div class="table-header">
     <span class="table-title">📋 Daftar Antrian</span>
-    <div style="display:flex;gap:8px;align-items:center">
-      <span class="badge" id="totalBadge">0</span>
-      <button class="btn-clear" onclick="clearSemua()">Hapus Semua</button>
-    </div>
+    <span class="badge" id="totalBadge">0</span>
   </div>
+  <input class="search-box" type="text" id="searchBox" placeholder="🔍 Cari nama atau nomor antrian..." oninput="renderTabel()">
 
-  <table>
-    <thead>
-      <tr>
-        <th>No.</th>
-        <th>Nama</th>
-        <th>Layanan</th>
-        <th>Kirim</th>
-      </tr>
-    </thead>
-    <tbody id="tabelBody">
-      <tr><td colspan="4" class="empty">Belum ada antrian</td></tr>
-    </tbody>
-  </table>
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>No.</th>
+          <th>Nama</th>
+          <th>Layanan</th>
+          <th>Kirim</th>
+        </tr>
+      </thead>
+      <tbody id="tabelBody">
+        <tr><td colspan="4" class="empty">Memuat data...</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination" id="pagination"></div>
 </div>
 
+<div class="toast" id="toast"></div>
+
 <script>
-  const counters = { A: 0, B: 0, C: 0 };
-  const daftar = [];
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx5VHdkstcLwU5xYUPnI9MAZUoS6b8fwdWeADYnfrm-X8bY4iMdBdc3HvDsu0Tdc6NX/exec";
+const PREFIX = { Umum: "A", Prioritas: "B", Khusus: "C" };
 
-  function tambahAntrian() {
-    const nama = document.getElementById('inputNama').value.trim();
-    const hp   = document.getElementById('inputHP').value.trim();
-    const [prefix, layanan] = document.getElementById('inputLayanan').value.split('|');
+let semuaData = [];
+let counters = { A: 0, B: 0, C: 0 };
+let page = 1;
+const perPage = 20;
 
-    if (!nama) { alert('Nama wajib diisi!'); return; }
-    if (!hp)   { alert('Nomor WhatsApp wajib diisi!'); return; }
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
 
-    counters[prefix]++;
-    const nomor = prefix + String(counters[prefix]).padStart(3, '0');
+function formatHP(hp) {
+  let h = hp.replace(/\D/g, '');
+  if (h.startsWith('0')) h = '62' + h.slice(1);
+  return h;
+}
 
-    const now = new Date();
-    const tgl = now.toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
-    const jam = now.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+function buatPesan(nama, nomor, layanan) {
+  const now = new Date();
+  const tgl = now.toLocaleDateString('id-ID', { day:'numeric', month:'long', year:'numeric' });
+  const jam = now.toLocaleTimeString('id-ID', { hour:'2-digit', minute:'2-digit' });
+  return `Halo *${nama}* 👋\n\n🎫 *NOMOR ANTRIAN ANDA*\n━━━━━━━━━━━━━━━━\n📋 Layanan: *${layanan}*\n🔢 Nomor: *${nomor}*\n📅 ${tgl}  ⏰ ${jam}\n━━━━━━━━━━━━━━━━\nMohon tunggu, kami akan memanggil nomor antrian Anda.\n\n_Terima kasih 🙏_`;
+}
 
-    const pesan =
-      `Halo *${nama}* 👋\n\n` +
-      `🎫 *NOMOR ANTRIAN ANDA*\n` +
-      `━━━━━━━━━━━━━━━━\n` +
-      `📋 Layanan: *${layanan}*\n` +
-      `🔢 Nomor: *${nomor}*\n` +
-      `📅 ${tgl}  ⏰ ${jam}\n` +
-      `━━━━━━━━━━━━━━━━\n` +
-      `Mohon tunggu, kami akan memanggil nomor antrian Anda.\n\n` +
-      `_Terima kasih 🙏_`;
-
-    let hpFormat = hp.replace(/\D/g, '');
-    if (hpFormat.startsWith('0')) hpFormat = '62' + hpFormat.slice(1);
-    const waLink = `https://wa.me/${hpFormat}?text=${encodeURIComponent(pesan)}`;
-
-    daftar.push({ nama, layanan, nomor, waLink, terkirim: false });
+async function loadData() {
+  try {
+    const res = await fetch(SCRIPT_URL + "?action=getAll");
+    const raw = await res.json();
+    // raw[0] = header, raw[1..] = data
+    semuaData = raw.slice(1).map(r => ({
+      nomor: r[0], nama: r[1], layanan: r[2], hp: r[3], status: r[4]
+    }));
+    // sync counters
+    semuaData.forEach(d => {
+      if (!d.nomor) return;
+      const p = d.nomor[0];
+      const n = parseInt(d.nomor.slice(1)) || 0;
+      if (counters[p] !== undefined && n > counters[p]) counters[p] = n;
+    });
+    document.getElementById('totalBadge').textContent = semuaData.length;
     renderTabel();
-
-    // reset form
-    document.getElementById('inputNama').value = '';
-    document.getElementById('inputHP').value = '';
+  } catch(e) {
+    document.getElementById('tabelBody').innerHTML = `<tr><td colspan="4" class="empty">Gagal memuat data 😢</td></tr>`;
   }
+}
 
-  function kirim(index) {
-    window.open(daftar[index].waLink, '_blank');
-    daftar[index].terkirim = true;
-    renderTabel();
-  }
+function renderTabel() {
+  const q = document.getElementById('searchBox').value.toLowerCase();
+  const filtered = semuaData.filter(d =>
+    (d.nama || '').toLowerCase().includes(q) ||
+    (d.nomor || '').toLowerCase().includes(q)
+  );
 
-  function clearSemua() {
-    if (!daftar.length) return;
-    if (confirm('Hapus semua antrian?')) {
-      daftar.length = 0;
-      counters.A = counters.B = counters.C = 0;
-      renderTabel();
-    }
-  }
+  const totalPage = Math.max(1, Math.ceil(filtered.length / perPage));
+  if (page > totalPage) page = totalPage;
 
-  function renderTabel() {
-    const tbody = document.getElementById('tabelBody');
-    document.getElementById('totalBadge').textContent = daftar.length;
+  const slice = filtered.slice((page-1)*perPage, page*perPage);
+  const tbody = document.getElementById('tabelBody');
 
-    if (!daftar.length) {
-      tbody.innerHTML = `<tr><td colspan="4" class="empty">Belum ada antrian</td></tr>`;
-      return;
-    }
-
-    tbody.innerHTML = daftar.map((d, i) => `
-      <tr class="${d.terkirim ? 'done' : ''}">
-        <td class="nomor">${d.nomor}</td>
-        <td>${d.nama}</td>
-        <td>${d.layanan}</td>
+  if (!slice.length) {
+    tbody.innerHTML = `<tr><td colspan="4" class="empty">Tidak ada data</td></tr>`;
+  } else {
+    tbody.innerHTML = slice.map((d, i) => {
+      const idx = semuaData.indexOf(d);
+      const sent = d.status === 'Terkirim';
+      return `<tr class="${sent ? 'done' : ''}">
+        <td class="nomor">${d.nomor || '-'}</td>
+        <td>${d.nama || '-'}</td>
+        <td>${d.layanan || '-'}</td>
         <td class="aksi">
-          ${d.terkirim
-            ? `<span class="btn-wa sent">✓ Terkirim</span>`
-            : `<button class="btn-wa" onclick="kirim(${i})">📲 Kirim</button>`
+          ${sent
+            ? `<span class="btn-sent">✓ Terkirim</span>`
+            : `<button class="btn-wa" onclick="kirim(${idx})">📲 Kirim</button>`
           }
         </td>
-      </tr>
-    `).join('');
+      </tr>`;
+    }).join('');
   }
+
+  // pagination
+  const pg = document.getElementById('pagination');
+  if (totalPage <= 1) { pg.innerHTML = ''; return; }
+  let html = `<span class="page-info">Hal ${page}/${totalPage}</span>`;
+  if (page > 1) html += `<button class="page-btn" onclick="goPage(${page-1})">‹ Prev</button>`;
+  // show max 5 pages
+  let start = Math.max(1, page-2), end = Math.min(totalPage, start+4);
+  for (let p2 = start; p2 <= end; p2++) {
+    html += `<button class="page-btn ${p2===page?'active':''}" onclick="goPage(${p2})">${p2}</button>`;
+  }
+  if (page < totalPage) html += `<button class="page-btn" onclick="goPage(${page+1})">Next ›</button>`;
+  pg.innerHTML = html;
+}
+
+function goPage(p) { page = p; renderTabel(); }
+
+async function kirim(idx) {
+  const d = semuaData[idx];
+  if (!d.hp) { alert('Nomor HP tidak ada!'); return; }
+  const pesan = buatPesan(d.nama, d.nomor, d.layanan);
+  const url = `https://wa.me/${formatHP(d.hp)}?text=${encodeURIComponent(pesan)}`;
+  window.open(url, '_blank');
+
+  // update status
+  d.status = 'Terkirim';
+  renderTabel();
+  showToast('✅ WhatsApp dibuka!');
+
+  // update ke sheet (fire and forget)
+  fetch(`${SCRIPT_URL}?action=updateStatus&nomor=${encodeURIComponent(d.nomor)}`).catch(()=>{});
+}
+
+async function tambahAntrian() {
+  const nama = document.getElementById('inputNama').value.trim();
+  const hp   = document.getElementById('inputHP').value.trim();
+  const layanan = document.getElementById('inputLayanan').value;
+
+  if (!nama) { alert('Nama wajib diisi!'); return; }
+  if (!hp)   { alert('Nomor WhatsApp wajib diisi!'); return; }
+
+  const prefix = PREFIX[layanan];
+  counters[prefix]++;
+  const nomor = prefix + String(counters[prefix]).padStart(3,'0');
+
+  const btn = document.getElementById('btnTambah');
+  btn.disabled = true; btn.textContent = 'Menyimpan...';
+
+  try {
+    await fetch(`${SCRIPT_URL}?action=tambah&nomor=${encodeURIComponent(nomor)}&nama=${encodeURIComponent(nama)}&layanan=${encodeURIComponent(layanan)}&hp=${encodeURIComponent(hp)}`);
+    semuaData.unshift({ nomor, nama, layanan, hp, status: 'Belum' });
+    document.getElementById('totalBadge').textContent = semuaData.length;
+    page = 1;
+    renderTabel();
+    showToast(`✅ ${nomor} - ${nama} ditambahkan!`);
+    document.getElementById('inputNama').value = '';
+    document.getElementById('inputHP').value = '';
+  } catch(e) {
+    alert('Gagal menyimpan. Coba lagi.');
+    counters[prefix]--;
+  }
+  btn.disabled = false; btn.textContent = '+ Tambah Antrian';
+}
+
+async function seedData() {
+  if (!confirm('Isi 500 data dummy ke Google Sheets? Data lama akan tertimpa!')) return;
+  const btn = document.getElementById('btnSeed');
+  btn.disabled = true; btn.textContent = '⏳ Mengisi data...';
+  try {
+    const res = await fetch(SCRIPT_URL + "?action=seeding");
+    const data = await res.json();
+    showToast(`✅ ${data.total} data berhasil diisi!`);
+    await loadData();
+  } catch(e) {
+    alert('Gagal seeding. Coba lagi.');
+  }
+  btn.disabled = false; btn.textContent = '🌱 Isi 500 Data Dummy ke Google Sheets';
+}
+
+// Load saat halaman dibuka
+loadData();
 </script>
 </body>
 </html>
+
 
