@@ -7,52 +7,22 @@
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { min-height: 100vh; background: #f4f6f8; font-family: 'Segoe UI', sans-serif; }
-
-  .topbar {
-    background: #075E54; color: #fff;
-    padding: 14px 20px;
-    display: flex; align-items: center; justify-content: space-between;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-  }
+  .topbar { background: #075E54; color: #fff; padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 2px 8px rgba(0,0,0,0.2); }
   .topbar h1 { font-size: 17px; }
-  .topbar .refresh-btn {
-    background: rgba(255,255,255,0.15); border: none; color: #fff;
-    padding: 7px 14px; border-radius: 8px; cursor: pointer; font-size: 13px;
-    transition: background 0.2s;
-  }
-  .topbar .refresh-btn:hover { background: rgba(255,255,255,0.25); }
-
+  .refresh-btn { background: rgba(255,255,255,0.15); border: none; color: #fff; padding: 7px 14px; border-radius: 8px; cursor: pointer; font-size: 13px; }
+  .refresh-btn:hover { background: rgba(255,255,255,0.25); }
   .stats { display: flex; gap: 12px; padding: 16px; flex-wrap: wrap; max-width: 900px; margin: 0 auto; }
-  .stat-card {
-    flex: 1; min-width: 120px;
-    background: #fff; border-radius: 12px; padding: 16px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.08); text-align: center;
-  }
+  .stat-card { flex: 1; min-width: 120px; background: #fff; border-radius: 12px; padding: 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); text-align: center; }
   .stat-card .num { font-size: 32px; font-weight: 900; color: #075E54; }
   .stat-card .lbl { font-size: 12px; color: #888; margin-top: 4px; }
-
   .main { padding: 0 16px 24px; max-width: 900px; margin: 0 auto; }
-
   .toolbar { display: flex; gap: 10px; margin-bottom: 14px; flex-wrap: wrap; align-items: center; }
-  .search-box {
-    flex: 1; min-width: 180px; padding: 10px 14px;
-    border: 1.5px solid #ddd; border-radius: 10px;
-    font-size: 14px; outline: none;
-  }
+  .search-box { flex: 1; min-width: 180px; padding: 10px 14px; border: 1.5px solid #ddd; border-radius: 10px; font-size: 14px; outline: none; }
   .search-box:focus { border-color: #25D366; }
-  .filter-sel {
-    padding: 10px 14px; border: 1.5px solid #ddd; border-radius: 10px;
-    font-size: 14px; outline: none; background: #fff; cursor: pointer;
-  }
-  .btn-seed {
-    padding: 10px 16px; background: #fff; color: #075E54;
-    border: 2px solid #075E54; border-radius: 10px;
-    font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s;
-    white-space: nowrap;
-  }
+  .filter-sel { padding: 10px 14px; border: 1.5px solid #ddd; border-radius: 10px; font-size: 14px; outline: none; background: #fff; cursor: pointer; }
+  .btn-seed { padding: 10px 16px; background: #fff; color: #075E54; border: 2px solid #075E54; border-radius: 10px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
   .btn-seed:hover { background: #075E54; color: #fff; }
   .btn-seed:disabled { border-color: #aaa; color: #aaa; cursor: default; }
-
   .table-card { background: #fff; border-radius: 14px; padding: 16px; box-shadow: 0 1px 6px rgba(0,0,0,0.08); }
   .table-wrap { overflow-x: auto; }
   table { width: 100%; border-collapse: collapse; min-width: 500px; }
@@ -70,24 +40,17 @@
   .btn-wa:hover { background: #128C7E; }
   .btn-sent { background: #e8f5e9; color: #2e7d32; border-radius: 8px; padding: 7px 14px; font-size: 12px; font-weight: 600; }
   .empty { text-align: center; padding: 32px 0; color: #bbb; font-size: 14px; }
-
-  .badge-layanan {
-    display: inline-block; border-radius: 6px; padding: 3px 9px;
-    font-size: 11px; font-weight: 700;
-  }
+  .badge-layanan { display: inline-block; border-radius: 6px; padding: 3px 9px; font-size: 11px; font-weight: 700; }
   .badge-Umum { background: #e3f2fd; color: #1565c0; }
   .badge-Prioritas { background: #fff8e1; color: #f57f17; }
   .badge-Khusus { background: #f3e5f5; color: #6a1b9a; }
-
   .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
-  .page-btn { padding: 6px 13px; border-radius: 8px; border: 1.5px solid #ddd; background: #fff; font-size: 13px; cursor: pointer; transition: all 0.15s; }
+  .page-btn { padding: 6px 13px; border-radius: 8px; border: 1.5px solid #ddd; background: #fff; font-size: 13px; cursor: pointer; }
   .page-btn:hover { border-color: #25D366; }
   .page-btn.active { background: #075E54; color: #fff; border-color: #075E54; }
   .page-info { font-size: 12px; color: #888; }
-
   .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #075E54; color: #fff; padding: 10px 24px; border-radius: 20px; font-size: 13px; font-weight: 600; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 999; white-space: nowrap; }
   .toast.show { opacity: 1; }
-
   .link-customer { display: block; text-align: center; margin-bottom: 14px; font-size: 13px; color: #075E54; text-decoration: none; font-weight: 600; }
   .link-customer:hover { text-decoration: underline; }
 </style>
@@ -106,7 +69,7 @@
 </div>
 
 <div class="main">
-  <a class="link-customer" href="index.html" target="_blank">🔗 Buka Halaman Customer →</a>
+  <a class="link-customer" href="../" target="_blank">🔗 Buka Halaman Customer →</a>
 
   <div class="toolbar">
     <input class="search-box" type="text" id="searchBox" placeholder="🔍 Cari nama atau nomor..." oninput="renderTabel()">
@@ -142,7 +105,9 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFPnDfoN6uKQ8hPPnl9PUHil_Hnm4IoWpZ2UB9__0pfPa58NhZBmTEKiPdIJHvNx1t/exec";
+// ⬇️ GANTI URL INI dengan URL Apps Script barumu
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwQNE7P3sgWz-nMnUus704Vu0x5r7Fyabd1KZ-FZZnM8KUxSr-T0Pnv195jZgr-za5p/exec";
+
 let semuaData = [], page = 1;
 const perPage = 20;
 
@@ -162,7 +127,7 @@ function buatPesan(nama, nomor, layanan) {
   const now = new Date();
   const tgl = now.toLocaleDateString('id-ID', {day:'numeric',month:'long',year:'numeric'});
   const jam = now.toLocaleTimeString('id-ID', {hour:'2-digit',minute:'2-digit'});
-  return `Halo *${nama}* 👋\n\n🎫 *NOMOR ANTRIAN ANDA*\n━━━━━━━━━━━━━━━━\n📋 Layanan: *${layanan}*\n🔢 Nomor: *${nomor}*\n📅 ${tgl}  ⏰ ${jam}\n━━━━━━━━━━━━━━━━\nMohon tunggu, kami akan memanggil nomor antrian Anda.\n\n_Terima kasih 🙏_`;
+  return `Halo *${nama}* 👋\n\n🎫 *NOMOR ANTRIAN ANDA*\n━━━━━━━━━━━━━━━━\n🔢 Nomor: *${nomor}*\n📋 Layanan: *${layanan}*\n📅 ${tgl}  ⏰ ${jam}\n━━━━━━━━━━━━━━━━\nMohon tunggu, kami akan memanggil nomor antrian Anda.\n\n_Terima kasih 🙏_`;
 }
 
 function jsonp(url) {
@@ -181,15 +146,14 @@ async function loadData() {
   try {
     const raw = await jsonp(SCRIPT_URL + "?action=getAll");
     semuaData = (Array.isArray(raw) ? raw.slice(1) : []).map(r => ({
-      nomor:r[0], nama:r[1], layanan:r[2], hp:r[3], status:r[4]
-    })).filter(d => d.nomor);
+      nomor: String(r[0]), nama: r[1], layanan: r[2], hp: r[3], status: r[4]
+    })).filter(d => d.nomor && d.nomor !== 'undefined');
 
     const total = semuaData.length;
     const terkirim = semuaData.filter(d => d.status==='Terkirim').length;
     document.getElementById('statTotal').textContent = total;
     document.getElementById('statBelum').textContent = total - terkirim;
     document.getElementById('statTerkirim').textContent = terkirim;
-
     page = 1;
     renderTabel();
   } catch(e) {
@@ -201,38 +165,33 @@ function renderTabel() {
   const q = document.getElementById('searchBox').value.toLowerCase();
   const fL = document.getElementById('filterLayanan').value;
   const fS = document.getElementById('filterStatus').value;
-
   const filtered = semuaData.filter(d =>
-    ((d.nama||'').toLowerCase().includes(q) || (d.nomor||'').toLowerCase().includes(q)) &&
-    (!fL || d.layanan === fL) &&
+    ((d.nama||'').toLowerCase().includes(q)||(d.nomor||'').toLowerCase().includes(q)) &&
+    (!fL || d.layanan===fL) &&
     (!fS || (fS==='Belum' ? d.status!=='Terkirim' : d.status==='Terkirim'))
   );
-
   const totalPage = Math.max(1, Math.ceil(filtered.length/perPage));
   if (page > totalPage) page = totalPage;
   const slice = filtered.slice((page-1)*perPage, page*perPage);
   const tbody = document.getElementById('tabelBody');
-
   if (!slice.length) {
     tbody.innerHTML = `<tr><td colspan="5" class="empty">Tidak ada data</td></tr>`;
   } else {
     tbody.innerHTML = slice.map(d => {
       const idx = semuaData.indexOf(d);
-      const sent = d.status === 'Terkirim';
+      const sent = d.status==='Terkirim';
       return `<tr class="${sent?'done':''}">
         <td class="nomor">${d.nomor}</td>
         <td>${d.nama||'-'}</td>
         <td><span class="badge-layanan badge-${d.layanan||''}">${d.layanan||'-'}</span></td>
         <td>${d.hp||'-'}</td>
         <td class="aksi">${sent
-          ? `<span class="btn-sent">✓ Terkirim</span>`
-          : `<button class="btn-wa" onclick="kirim(${idx})">📲 Kirim WA</button>`
+          ?`<span class="btn-sent">✓ Terkirim</span>`
+          :`<button class="btn-wa" onclick="kirim(${idx})">📲 Kirim WA</button>`
         }</td>
       </tr>`;
     }).join('');
   }
-
-  // pagination
   const pg = document.getElementById('pagination');
   if (totalPage<=1){pg.innerHTML='';return;}
   let html=`<span class="page-info">Hal ${page}/${totalPage} (${filtered.length} data)</span>`;
