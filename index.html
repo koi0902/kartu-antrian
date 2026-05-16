@@ -6,66 +6,25 @@
 <title>Antrian untuk chat choirul</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    min-height: 100vh;
-    background: #ECE5DD;
-    font-family: 'Segoe UI', sans-serif;
-    padding: 16px;
-  }
-
-  /* HEADER */
-  .header {
-    background: linear-gradient(135deg, #075E54, #25D366);
-    border-radius: 16px;
-    padding: 20px;
-    text-align: center;
-    margin-bottom: 16px;
-    max-width: 480px;
-    margin-left: auto; margin-right: auto;
-  }
+  body { min-height: 100vh; background: #ECE5DD; font-family: 'Segoe UI', sans-serif; padding: 16px; }
+  .header { background: linear-gradient(135deg, #075E54, #25D366); border-radius: 16px; padding: 20px; text-align: center; margin-bottom: 16px; max-width: 480px; margin-left: auto; margin-right: auto; }
   .header .icon { font-size: 40px; }
   .header h1 { color: #fff; font-size: 19px; margin-top: 6px; }
   .header p { color: rgba(255,255,255,0.75); font-size: 12px; margin-top: 4px; }
-
-  /* FORM */
-  .card {
-    background: #fff; border-radius: 14px; padding: 20px;
-    max-width: 480px; margin: 0 auto 16px;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.09);
-  }
+  .card { background: #fff; border-radius: 14px; padding: 20px; max-width: 480px; margin: 0 auto 16px; box-shadow: 0 2px 10px rgba(0,0,0,0.09); }
   .card-title { font-size: 14px; font-weight: 700; color: #075E54; margin-bottom: 14px; }
   label { font-size: 12px; font-weight: 600; color: #555; display: block; margin-bottom: 5px; }
-  input, select {
-    width: 100%; padding: 11px 13px;
-    border: 1.5px solid #ddd; border-radius: 10px;
-    font-size: 14px; margin-bottom: 12px; outline: none;
-    transition: border 0.2s;
-  }
+  input, select { width: 100%; padding: 11px 13px; border: 1.5px solid #ddd; border-radius: 10px; font-size: 14px; margin-bottom: 12px; outline: none; transition: border 0.2s; }
   input:focus, select:focus { border-color: #25D366; }
   .row { display: flex; gap: 10px; }
   .row > div { flex: 1; }
-  .btn {
-    width: 100%; padding: 13px;
-    background: #25D366; color: #fff;
-    border: none; border-radius: 11px;
-    font-size: 15px; font-weight: 700;
-    cursor: pointer; transition: background 0.2s;
-  }
+  .btn { width: 100%; padding: 13px; background: #25D366; color: #fff; border: none; border-radius: 11px; font-size: 15px; font-weight: 700; cursor: pointer; transition: background 0.2s; }
   .btn:hover { background: #128C7E; }
   .btn:disabled { background: #aaa; cursor: default; }
-
-  /* TIKET */
-  .tiket {
-    display: none; max-width: 480px; margin: 0 auto 16px;
-    background: #fff; border-radius: 16px; overflow: hidden;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-  }
-  .tiket-top {
-    background: linear-gradient(135deg, #075E54, #25D366);
-    padding: 24px 20px; text-align: center;
-  }
+  .tiket { display: none; max-width: 480px; margin: 0 auto 16px; background: #fff; border-radius: 16px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.12); }
+  .tiket-top { background: linear-gradient(135deg, #075E54, #25D366); padding: 24px 20px; text-align: center; }
   .tiket-top .label { color: rgba(255,255,255,0.8); font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
-  .tiket-top .nomor { color: #fff; font-size: 64px; font-weight: 900; font-family: 'Courier New', monospace; line-height: 1; margin: 8px 0 4px; }
+  .tiket-top .nomor { color: #fff; font-size: 72px; font-weight: 900; font-family: 'Courier New', monospace; line-height: 1; margin: 8px 0 4px; }
   .tiket-top .layanan { color: rgba(255,255,255,0.85); font-size: 14px; }
   .tiket-bottom { padding: 16px 20px; }
   .info-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid #f0f0f0; font-size: 13px; }
@@ -75,56 +34,41 @@
   .notif { background: #f0faf4; border-radius: 10px; padding: 12px; margin-top: 10px; font-size: 13px; color: #075E54; text-align: center; line-height: 1.6; }
   .btn-baru { width: 100%; padding: 11px; background: transparent; border: 2px solid #25D366; border-radius: 11px; color: #25D366; font-size: 14px; font-weight: 700; cursor: pointer; margin-top: 14px; transition: all 0.2s; }
   .btn-baru:hover { background: #25D366; color: #fff; }
-
-  /* DAFTAR ANTRIAN */
-  .list-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 12px;
-  }
+  .list-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
   .badge { background: #25D366; color: #fff; border-radius: 20px; padding: 3px 11px; font-size: 12px; font-weight: 700; }
   .search-box { width: 100%; padding: 9px 12px; border: 1.5px solid #ddd; border-radius: 9px; font-size: 13px; margin-bottom: 12px; outline: none; }
   .search-box:focus { border-color: #25D366; }
-
   table { width: 100%; border-collapse: collapse; }
   thead tr { background: #075E54; }
   thead th { color: #fff; font-size: 12px; font-weight: 600; padding: 9px 10px; text-align: left; }
   thead th:first-child { border-radius: 8px 0 0 8px; }
   thead th:last-child { border-radius: 0 8px 8px 0; text-align: center; }
-  tbody tr { border-bottom: 1px solid #f0f0f0; transition: background 0.15s; }
+  tbody tr { border-bottom: 1px solid #f0f0f0; }
   tbody tr:hover { background: #f9fffe; }
   tbody tr.highlight { background: #e8f5e9 !important; }
   td { padding: 9px 10px; font-size: 13px; color: #333; vertical-align: middle; }
   td.nomor { font-weight: 700; font-size: 14px; color: #075E54; font-family: 'Courier New', monospace; }
   td.status { text-align: center; }
-
-  .pill {
-    display: inline-block; border-radius: 20px; padding: 3px 10px;
-    font-size: 11px; font-weight: 700;
-  }
+  .pill { display: inline-block; border-radius: 20px; padding: 3px 10px; font-size: 11px; font-weight: 700; }
   .pill-belum { background: #fff3e0; color: #e65100; }
   .pill-terkirim { background: #e8f5e9; color: #2e7d32; }
-
   .empty { text-align: center; padding: 24px 0; color: #bbb; font-size: 13px; }
-
   .pagination { display: flex; justify-content: center; align-items: center; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
   .page-btn { padding: 5px 11px; border-radius: 8px; border: 1.5px solid #ddd; background: #fff; font-size: 13px; cursor: pointer; }
   .page-btn.active { background: #075E54; color: #fff; border-color: #075E54; }
   .page-info { font-size: 12px; color: #888; }
-
   .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #075E54; color: #fff; padding: 10px 22px; border-radius: 20px; font-size: 13px; font-weight: 600; opacity: 0; transition: opacity 0.3s; pointer-events: none; z-index: 999; }
   .toast.show { opacity: 1; }
 </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <div class="header" style="margin-bottom:16px">
   <div class="icon">🏛️</div>
   <h1>antrian untuk chat choirul</h1>
   <p>dikarenakan chat yang menumpuk, chat dbalas paling cepat 3 jam sejak pesan pertama dikirim</p>
 </div>
 
-<!-- FORM -->
 <div class="card" id="formCard">
   <div class="card-title">🎫 Ambil Nomor Antrian</div>
   <div class="row">
@@ -146,11 +90,10 @@
   <button class="btn" id="btnDaftar" onclick="daftar()">🎫 Ambil Nomor Antrian</button>
 </div>
 
-<!-- TIKET -->
 <div class="tiket" id="tiket">
   <div class="tiket-top">
     <div class="label">Nomor Antrian Anda</div>
-    <div class="nomor" id="tNomor">A001</div>
+    <div class="nomor" id="tNomor">0001</div>
     <div class="layanan" id="tLayanan">Layanan Umum</div>
   </div>
   <div class="tiket-bottom">
@@ -162,7 +105,6 @@
   </div>
 </div>
 
-<!-- DAFTAR ANTRIAN -->
 <div class="card" style="max-width:480px;margin:0 auto">
   <div class="list-header">
     <span class="card-title">📋 Daftar Antrian</span>
@@ -183,9 +125,10 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFPnDfoN6uKQ8hPPnl9PUHil_Hnm4IoWpZ2UB9__0pfPa58NhZBmTEKiPdIJHvNx1t/exec";
-const PREFIX = { Umum:"A", Prioritas:"B", Khusus:"C" };
-let semuaData = [], counters = {A:0,B:0,C:0}, page = 1, nomorSaya = null;
+// ⬇️ GANTI URL INI dengan URL Apps Script barumu
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwQNE7P3sgWz-nMnUus704Vu0x5r7Fyabd1KZ-FZZnM8KUxSr-T0Pnv195jZgr-za5p/exec";
+
+let semuaData = [], page = 1, nomorSaya = null;
 const perPage = 15;
 
 function showToast(msg) {
@@ -209,14 +152,8 @@ async function loadData() {
   try {
     const raw = await jsonp(SCRIPT_URL + "?action=getAll");
     semuaData = (Array.isArray(raw) ? raw.slice(1) : []).map(r => ({
-      nomor:r[0], nama:r[1], layanan:r[2], status:r[4]
-      // HP sengaja tidak diambil — privasi customer
-    })).filter(d => d.nomor);
-    semuaData.forEach(d => {
-      if (!d.nomor) return;
-      const p = d.nomor[0], n = parseInt(d.nomor.slice(1))||0;
-      if (counters[p]!==undefined && n>counters[p]) counters[p]=n;
-    });
+      nomor: String(r[0]), nama: r[1], layanan: r[2], status: r[4]
+    })).filter(d => d.nomor && d.nomor !== 'undefined');
     document.getElementById('totalBadge').textContent = semuaData.length;
     renderTabel();
   } catch(e) {
@@ -233,7 +170,6 @@ function renderTabel() {
   if (page > totalPage) page = totalPage;
   const slice = filtered.slice((page-1)*perPage, page*perPage);
   const tbody = document.getElementById('tabelBody');
-
   if (!slice.length) {
     tbody.innerHTML = `<tr><td colspan="4" class="empty">Belum ada antrian</td></tr>`;
   } else {
@@ -244,15 +180,10 @@ function renderTabel() {
         <td class="nomor">${d.nomor}${isSaya?' 👈':''}</td>
         <td>${d.nama||'-'}</td>
         <td>${d.layanan||'-'}</td>
-        <td class="status">
-          <span class="pill ${sent?'pill-terkirim':'pill-belum'}">
-            ${sent?'✓ Dipanggil':'⏳ Menunggu'}
-          </span>
-        </td>
+        <td class="status"><span class="pill ${sent?'pill-terkirim':'pill-belum'}">${sent?'✓ Dipanggil':'⏳ Menunggu'}</span></td>
       </tr>`;
     }).join('');
   }
-
   const pg = document.getElementById('pagination');
   if (totalPage<=1){pg.innerHTML='';return;}
   let html=`<span class="page-info">Hal ${page}/${totalPage}</span>`;
@@ -275,14 +206,10 @@ async function daftar() {
   const btn = document.getElementById('btnDaftar');
   btn.disabled=true; btn.textContent='⏳ Mendaftarkan...';
 
-  // sync counter dulu
-  await loadData();
-  const prefix = PREFIX[layanan];
-  counters[prefix]++;
-  const nomor = String(counters['total']).padStart(3,'0');
-
   try {
-    await jsonp(`${SCRIPT_URL}?action=tambah&nomor=${encodeURIComponent(nomor)}&nama=${encodeURIComponent(nama)}&layanan=${encodeURIComponent(layanan)}&hp=${encodeURIComponent(hp)}`);
+    // Nomor dibuat otomatis di Apps Script berdasarkan jumlah baris
+    const hasil = await jsonp(`${SCRIPT_URL}?action=tambah&nama=${encodeURIComponent(nama)}&layanan=${encodeURIComponent(layanan)}&hp=${encodeURIComponent(hp)}`);
+    const nomor = hasil.nomor;
 
     const now = new Date();
     document.getElementById('tNomor').textContent = nomor;
@@ -292,16 +219,13 @@ async function daftar() {
     document.getElementById('tJam').textContent = now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
 
     nomorSaya = nomor;
-    semuaData.unshift({nomor, nama, layanan, status:'Belum'});
-    document.getElementById('totalBadge').textContent = semuaData.length;
-    page=1; renderTabel();
+    await loadData();
 
     document.getElementById('formCard').style.display='none';
     document.getElementById('tiket').style.display='block';
     showToast('✅ Antrian berhasil didaftarkan!');
   } catch(e) {
     alert('Gagal mendaftar. Coba lagi.');
-    counters[prefix]--;
   }
   btn.disabled=false; btn.textContent='🎫 Ambil Nomor Antrian';
 }
@@ -315,7 +239,6 @@ function resetForm() {
   renderTabel();
 }
 
-// Auto refresh daftar setiap 30 detik
 loadData();
 setInterval(loadData, 30000);
 </script>
