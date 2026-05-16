@@ -183,7 +183,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxaZD3Lyds1VrFgzzysKVErywujx0mCQ5YAr3YlOpGRr5boiVpSm4bD37RuKTmGpch8/exec";
+const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyFPnDfoN6uKQ8hPPnl9PUHil_Hnm4IoWpZ2UB9__0pfPa58NhZBmTEKiPdIJHvNx1t/exec";
 const PREFIX = { Umum:"A", Prioritas:"B", Khusus:"C" };
 let semuaData = [], counters = {A:0,B:0,C:0}, page = 1, nomorSaya = null;
 const perPage = 15;
@@ -279,7 +279,7 @@ async function daftar() {
   await loadData();
   const prefix = PREFIX[layanan];
   counters[prefix]++;
-  const nomor = prefix + String(counters[prefix]).padStart(3,'0');
+  const nomor = String(counters['total']).padStart(3,'0');
 
   try {
     await jsonp(`${SCRIPT_URL}?action=tambah&nomor=${encodeURIComponent(nomor)}&nama=${encodeURIComponent(nama)}&layanan=${encodeURIComponent(layanan)}&hp=${encodeURIComponent(hp)}`);
